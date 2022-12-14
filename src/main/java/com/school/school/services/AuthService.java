@@ -2,24 +2,37 @@ package com.school.school.services;
 
 import java.util.ArrayList;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.school.school.dto.CreateUserDto;
 import com.school.school.entities.UserEntity;
 import com.school.school.repositories.UserRepository;
 
 @Service
 public class AuthService {
   @Autowired
-  UserRepository userRepository;
+  private UserRepository userRepository;
+  @Autowired
+  private EncoderServiceImp encoderServiceImp;
 
   public ArrayList<UserEntity> findUsers() {
     return (ArrayList<UserEntity>) this.userRepository.findAll();
   }
 
-  public UserEntity createUser(UserEntity user) {
-    return userRepository.save(user);
+  public <T> T createUser(CreateUserDto user) {
+    try {
+
+      String hash = this.encoderServiceImp.encodePassword(user.password);
+      UserEntity userEntity = new UserEntity();
+      userEntity.setPassword(hash);
+      userEntity.setEmail(user.email);
+      userEntity.setUsername(user.username);
+      return (T) userRepository.save(userEntity);
+    } catch (Exception e) {
+      System.out.println(e);
+      return (T) e.getMessage();
+    }
   }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.school.school.dto.CreateUserDto;
 import com.school.school.entities.UserEntity;
 import com.school.school.services.AuthService;
 
@@ -25,7 +26,7 @@ public class Auth {
   }
 
   @PostMapping("/register")
-  public UserEntity createUser(@RequestBody UserEntity user) {
+  public UserEntity createUser(@RequestBody CreateUserDto user) {
 
     return authService.createUser(user);
   }

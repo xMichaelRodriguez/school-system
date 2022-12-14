@@ -11,10 +11,10 @@ public class UserEntity {
   @Column(name = "uid")
   private Long uid;
 
-  @Column
+  @Column(nullable = false)
   private String username;
 
-  @Column(unique = true)
+  @Column(unique = true, nullable = false)
   private String email;
 
   @Column
@@ -34,14 +34,6 @@ public class UserEntity {
     this.username = username;
   }
 
-  public Boolean getIsActive() {
-    return this.isActive;
-  }
-
-  public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
-  }
-
   public void setPassword(String pass) {
     this.password = pass;
   }
@@ -52,6 +44,14 @@ public class UserEntity {
 
   public String getEmail() {
     return this.email;
+  }
+
+  public Boolean getIsActive() {
+    return this.isActive;
+  }
+
+  public void setIsActive(Boolean isActive) {
+    this.isActive = isActive;
   }
 
   public void setUid(Long uid) {
