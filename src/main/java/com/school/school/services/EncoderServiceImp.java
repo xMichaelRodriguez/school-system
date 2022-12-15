@@ -16,7 +16,6 @@ public class EncoderServiceImp implements EncoderService {
 
   @Override
   public Boolean checkPassword(String password, String hash) {
-
     Boolean isValid = BCrypt.checkpw(password, hash);
     return isValid;
   }

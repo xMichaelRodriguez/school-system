@@ -34,8 +34,8 @@ public class UserEntity {
     this.username = username;
   }
 
-  public void setPassword(String pass) {
-    this.password = pass;
+  public void setPassword(String hash) {
+    this.password = hash;
   }
 
   public void setEmail(String email) {
