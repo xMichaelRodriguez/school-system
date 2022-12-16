@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EncoderServiceImp implements EncoderService {
-
   private String salt = BCrypt.gensalt();
 
   @Override
