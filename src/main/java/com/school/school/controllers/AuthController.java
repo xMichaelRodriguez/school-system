@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.school.dto.CreateUserDto;
+import com.school.school.dto.LoginUserDto;
 import com.school.school.entities.UserEntity;
 import com.school.school.services.AuthService;
 
@@ -34,6 +35,11 @@ public class AuthController {
   public UserEntity createUser(@RequestBody CreateUserDto user) {
 
     return this.authService.createUser(user);
+  }
+
+  @PostMapping("/login")
+  public UserEntity login(@RequestBody LoginUserDto loginUserDto) {
+    return this.authService.loginUser(loginUserDto);
   }
 
 }
