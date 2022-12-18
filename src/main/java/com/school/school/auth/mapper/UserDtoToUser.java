@@ -1,10 +1,10 @@
-package com.school.school.mapper;
+package com.school.school.auth.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.school.school.dto.CreateUserDto;
-import com.school.school.entities.UserEntity;
-import com.school.school.services.EncoderServiceImp;
+import com.school.school.auth.dto.CreateUserDto;
+import com.school.school.auth.entities.UserEntity;
+import com.school.school.auth.services.EncoderServiceImp;
 
 @Component
 public class UserDtoToUser implements IMapper<CreateUserDto, UserEntity> {

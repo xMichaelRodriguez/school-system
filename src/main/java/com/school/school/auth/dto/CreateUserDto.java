@@ -1,4 +1,4 @@
-package com.school.school.dto;
+package com.school.school.auth.dto;
 
 public class CreateUserDto {
   public String username;

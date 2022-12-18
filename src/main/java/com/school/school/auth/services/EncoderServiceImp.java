@@ -1,4 +1,4 @@
-package com.school.school.services;
+package com.school.school.auth.services;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;

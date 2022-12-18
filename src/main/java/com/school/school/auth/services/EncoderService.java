@@ -1,4 +1,4 @@
-package com.school.school.services;
+package com.school.school.auth.services;
 
 public interface EncoderService {
 

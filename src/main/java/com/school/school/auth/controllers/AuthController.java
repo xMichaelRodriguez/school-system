@@ -1,4 +1,4 @@
-package com.school.school.controllers;
+package com.school.school.auth.controllers;
 
 import java.util.ArrayList;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.school.school.dto.CreateUserDto;
-import com.school.school.dto.LoginUserDto;
-import com.school.school.entities.UserEntity;
+import com.school.school.auth.dto.CreateUserDto;
+import com.school.school.auth.dto.LoginUserDto;
+import com.school.school.auth.entities.UserEntity;
 import com.school.school.errors.MyCustomExceptions;
-import com.school.school.services.AuthService;
+import com.school.school.auth.services.AuthService;
 
 @RestController
 @RequestMapping("/auth/")
@@ -33,7 +33,7 @@ public class AuthController {
   }
 
   @PostMapping("/register")
-  public UserEntity createUser(@RequestBody CreateUserDto user) {
+  public UserEntity createUser(@RequestBody CreateUserDto user) throws MyCustomExceptions {
 
     return this.authService.createUser(user);
   }

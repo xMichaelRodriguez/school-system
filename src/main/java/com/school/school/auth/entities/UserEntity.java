@@ -1,9 +1,13 @@
-package com.school.school.entities;
+package com.school.school.auth.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
 public class UserEntity {
 
   @Id
@@ -12,11 +16,17 @@ public class UserEntity {
   private Long uid;
 
   @Column(nullable = false)
+  @NotEmpty
+  @Size(min = 3, max = 16)
   private String username;
 
+  @NotEmpty
+  @Email
   @Column(unique = true, nullable = false)
   private String email;
 
+  // @Pattern(regexp =
+  // "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!_.%*?&])([A-Za-z0-9]){8,15}$")
   @Column
   private String password;
 

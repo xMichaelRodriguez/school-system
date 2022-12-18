@@ -1,22 +1,23 @@
-package com.school.school.services;
+package com.school.school.auth.services;
 
 import java.util.ArrayList;
 
-// import org.slf4j.Logger;
-//  import org.slf4j.LoggerFactory;
+import org.postgresql.util.PSQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.school.school.dto.CreateUserDto;
-import com.school.school.dto.LoginUserDto;
-import com.school.school.entities.UserEntity;
+import com.school.school.auth.dto.CreateUserDto;
+import com.school.school.auth.dto.LoginUserDto;
+import com.school.school.auth.entities.UserEntity;
 import com.school.school.errors.MyCustomExceptions;
-import com.school.school.mapper.UserDtoToUser;
-import com.school.school.repositories.UserRepository;
+import com.school.school.auth.mapper.UserDtoToUser;
+import com.school.school.auth.repositories.UserRepository;
 
 @Service
 public class AuthService {
-  // private final static Logger log = LoggerFactory.getLogger(AuthService.class);
+  private final static Logger log = LoggerFactory.getLogger(AuthService.class);
   private final UserRepository userRepository;
   private final UserDtoToUser userDtoToUser;
   private final EncoderServiceImp encoderServiceImp;
@@ -31,10 +32,23 @@ public class AuthService {
     return (ArrayList<UserEntity>) this.userRepository.findAll();
   }
 
-  public UserEntity createUser(CreateUserDto user) {
+  public UserEntity createUser(CreateUserDto user) throws MyCustomExceptions {
     UserEntity userEntity = userDtoToUser.map(user);
+    try {
+      UserEntity userSaved = this.userRepository.save(userEntity);
+      return userSaved;
+    } catch (Exception e) {
 
-    return this.userRepository.save(userEntity);
+      if (e.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad")) {
+        throw new MyCustomExceptions("There is already a mailing with" + user.email,
+            HttpStatus.CONFLICT.value(),
+            HttpStatus.CONFLICT.getReasonPhrase());
+      }
+
+      throw e;
+
+    }
+
   }
 
   public LoginUserDto loginUser(LoginUserDto user) throws MyCustomExceptions {
