@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.NotAcceptableStatusException;
 
 import com.school.school.auth.dto.CreateUserDto;
 import com.school.school.auth.dto.LoginUserDto;
@@ -84,17 +83,17 @@ public class AuthService {
     UUID id = UUID.fromString(uid);
     UUID codeParsed = UUID.fromString(code);
     UserEntity user = this.userRepository.findByUidAndActivationTokenAndIsActive(id, codeParsed, false);
-    log.info("PERROOOOOOOOOOOOOOOOOOOOOOO " + user.getIsActive());
-    // if (user == null) {
-    // throw new MyCustomExceptions("This action can not be done",
-    // HttpStatus.UNPROCESSABLE_ENTITY.value(),
-    // HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
-    // }
 
-    // user.setActivationToken(null);
-    // user.setIsActive(true);
+    if (user == null) {
+      throw new MyCustomExceptions("This action can not be done",
+          HttpStatus.UNPROCESSABLE_ENTITY.value(),
+          HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
+    }
 
-    // this.userRepository.save(user);
+    user.setActivationToken(null);
+    user.setIsActive(true);
+
+    this.userRepository.save(user);
 
     return HttpStatus.OK;
   }
