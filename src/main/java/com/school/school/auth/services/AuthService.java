@@ -2,12 +2,13 @@ package com.school.school.auth.services;
 
 import java.util.ArrayList;
 
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.NotAcceptableStatusException;
 
+import com.school.school.auth.dto.ActivateAccountDto;
 import com.school.school.auth.dto.CreateUserDto;
 import com.school.school.auth.dto.LoginUserDto;
 import com.school.school.auth.entities.UserEntity;
@@ -38,15 +39,15 @@ public class AuthService {
       UserEntity userSaved = this.userRepository.save(userEntity);
       return userSaved;
     } catch (Exception e) {
+      final String causeError = e.getMessage().toLowerCase();
 
-      if (e.getMessage().contains("ERROR: llave duplicada viola restricción de unicidad")) {
-        throw new MyCustomExceptions("There is already a mailing with" + user.email,
+      if (causeError.indexOf("constraint") > 0) {
+        throw new MyCustomExceptions("There is already a mailing with " + user.email,
             HttpStatus.CONFLICT.value(),
             HttpStatus.CONFLICT.getReasonPhrase());
       }
 
       throw e;
-
     }
 
   }
@@ -74,6 +75,17 @@ public class AuthService {
     UserEntity userEntity = this.userRepository.findByEmail(email);
 
     return userEntity;
+  }
+
+  public String activateAccount(ActivateAccountDto activateAccountDto) {
+    log.info(("GOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA + " + activateAccountDto));
+    // UserEntity userEntity =
+    // this.userRepository.findById(activateAccountDto.uuid);
+    // if (userEntity == null) {
+    // throw new NotAcceptableStatusException("The user has already been
+    // activated");
+    // }
+    return "hoa";
   }
 
 }

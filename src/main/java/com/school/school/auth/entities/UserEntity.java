@@ -1,19 +1,21 @@
 package com.school.school.auth.entities;
 
+import io.micrometer.common.lang.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
+// import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import java.util.UUID;
 
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "email") })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email", "activation_token" }) })
 public class UserEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @GeneratedValue(generator = "uuid")
   @Column(name = "uid")
-  private Long uid;
+  private UUID uid;
 
   @Column(nullable = false)
   @NotEmpty
@@ -34,7 +36,12 @@ public class UserEntity {
   private Boolean isActive = false;
 
   @Column
+  @Nullable
   private String resetPasswordToken;
+
+  @Nullable
+  @Column(unique = true, name = "activation_token", nullable = true)
+  private Long activationToken;
 
   public String getUsername() {
     return this.username;
@@ -69,7 +76,7 @@ public class UserEntity {
     this.isActive = isActive;
   }
 
-  public void setUid(Long uid) {
+  public void setUid(UUID uid) {
     this.uid = uid;
   }
 }

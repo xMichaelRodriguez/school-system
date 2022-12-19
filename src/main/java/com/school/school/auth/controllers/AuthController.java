@@ -2,14 +2,17 @@ package com.school.school.auth.controllers;
 
 import java.util.ArrayList;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.school.school.auth.dto.ActivateAccountDto;
 import com.school.school.auth.dto.CreateUserDto;
 import com.school.school.auth.dto.LoginUserDto;
 import com.school.school.auth.entities.UserEntity;
@@ -19,8 +22,7 @@ import com.school.school.auth.services.AuthService;
 @RestController
 @RequestMapping("/auth/")
 public class AuthController {
-  // private final static Logger log =
-  // LoggerFactory.getLogger(AuthController.class);
+  private final static Logger log = LoggerFactory.getLogger(AuthController.class);
   private final AuthService authService;
 
   public AuthController(AuthService authService) {
@@ -41,6 +43,13 @@ public class AuthController {
   @PostMapping("/login")
   public LoginUserDto login(@RequestBody LoginUserDto loginUserDto) throws MyCustomExceptions {
     return this.authService.loginUser(loginUserDto);
+  }
+
+  @GetMapping("/activate-accounts/")
+  public String VerifyAccount(@ModelAttribute ActivateAccountDto activateAccountDto) {
+    log.info("CONTROLLER " + activateAccountDto.code);
+    log.info("CONTROLLER2 " + activateAccountDto.uuid);
+    return "HOLA";
   }
 
 }
