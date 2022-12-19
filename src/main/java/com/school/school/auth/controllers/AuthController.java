@@ -39,7 +39,7 @@ public class AuthController {
   }
 
   @PostMapping("/login")
-  public LoginUserDto login(@RequestBody LoginUserDto loginUserDto) throws MyCustomExceptions {
+  public UserEntity login(@RequestBody LoginUserDto loginUserDto) throws MyCustomExceptions {
     return this.authService.loginUser(loginUserDto);
   }
 

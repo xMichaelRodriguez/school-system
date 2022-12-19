@@ -53,7 +53,7 @@ public class AuthService {
 
   }
 
-  public LoginUserDto loginUser(LoginUserDto user) throws MyCustomExceptions {
+  public UserEntity loginUser(LoginUserDto user) throws MyCustomExceptions {
 
     UserEntity userEntity = this.findByEmail(user.email);
 
@@ -69,7 +69,7 @@ public class AuthService {
           HttpStatus.UNAUTHORIZED.getReasonPhrase());
     }
 
-    return user;
+    return userEntity;
   }
 
   private UserEntity findByEmail(String email) {
