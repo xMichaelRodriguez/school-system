@@ -1,14 +1,16 @@
 package com.school.school.auth.services;
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
+import java.util.UUID;
 
+import org.aspectj.apache.bcel.classfile.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.NotAcceptableStatusException;
 
-import com.school.school.auth.dto.ActivateAccountDto;
 import com.school.school.auth.dto.CreateUserDto;
 import com.school.school.auth.dto.LoginUserDto;
 import com.school.school.auth.entities.UserEntity;
@@ -77,15 +79,24 @@ public class AuthService {
     return userEntity;
   }
 
-  public String activateAccount(ActivateAccountDto activateAccountDto) {
-    log.info(("GOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA + " + activateAccountDto));
-    // UserEntity userEntity =
-    // this.userRepository.findById(activateAccountDto.uuid);
-    // if (userEntity == null) {
-    // throw new NotAcceptableStatusException("The user has already been
-    // activated");
+  public HttpStatus activateAccount(String code, String uid) throws MyCustomExceptions {
+
+    UUID id = UUID.fromString(uid);
+    UUID codeParsed = UUID.fromString(code);
+    UserEntity user = this.userRepository.findByUidAndActivationTokenAndIsActive(id, codeParsed, false);
+    log.info("PERROOOOOOOOOOOOOOOOOOOOOOO " + user.getIsActive());
+    // if (user == null) {
+    // throw new MyCustomExceptions("This action can not be done",
+    // HttpStatus.UNPROCESSABLE_ENTITY.value(),
+    // HttpStatus.UNPROCESSABLE_ENTITY.getReasonPhrase());
     // }
-    return "hoa";
+
+    // user.setActivationToken(null);
+    // user.setIsActive(true);
+
+    // this.userRepository.save(user);
+
+    return HttpStatus.OK;
   }
 
 }

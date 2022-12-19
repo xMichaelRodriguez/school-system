@@ -1,5 +1,7 @@
 package com.school.school.auth.repositories;
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +12,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
   public UserEntity findByEmail(String email);
 
-  public UserEntity findByUid(String id);
+  public UserEntity findByUid(UUID id);
+
+  public UserEntity findByUidAndActivationTokenAndIsActive(UUID id, UUID code, Boolean isActive);
 
 }

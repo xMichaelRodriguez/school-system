@@ -46,10 +46,9 @@ public class AuthController {
   }
 
   @GetMapping("/activate-accounts/")
-  public String VerifyAccount(@ModelAttribute ActivateAccountDto activateAccountDto) {
-    log.info("CONTROLLER " + activateAccountDto.code);
-    log.info("CONTROLLER2 " + activateAccountDto.uuid);
-    return "HOLA";
+  public void VerifyAccount(@RequestParam String id, @RequestParam String code) throws MyCustomExceptions {
+
+    this.authService.activateAccount(code, id);
   }
 
 }

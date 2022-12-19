@@ -23,6 +23,7 @@ public class UserDtoToUser implements IMapper<CreateUserDto, UserEntity> {
     userEntity.setEmail(in.email);
     userEntity.setPassword(hash);
     userEntity.setIsActive(false);
+    userEntity.setActivationToken(java.util.UUID.randomUUID());
 
     return userEntity;
   }

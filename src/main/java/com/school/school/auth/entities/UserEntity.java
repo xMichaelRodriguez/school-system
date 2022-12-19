@@ -41,7 +41,7 @@ public class UserEntity {
 
   @Nullable
   @Column(unique = true, name = "activation_token", nullable = true)
-  private Long activationToken;
+  private UUID activationToken;
 
   public String getUsername() {
     return this.username;
@@ -78,5 +78,9 @@ public class UserEntity {
 
   public void setUid(UUID uid) {
     this.uid = uid;
+  }
+
+  public void setActivationToken(UUID uuid) {
+    this.activationToken = uuid;
   }
 }
